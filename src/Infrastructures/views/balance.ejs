@@ -1,0 +1,23 @@
+<%- include('partials/header') %>
+
+<div class="container py-5 h-100">
+  <div class="row d-flex justify-content-center align-items-center h-100">
+    <div class="col-lg-8 col-xl-6">
+      <div class="card rounded-3">
+        <div class="card-body p-4 p-md-5">
+          <h3 class="">Account Balance :</h3>
+          <h4>Rp<%= balance %></h4>
+          <form id="topupForm" action="/balances" method="post">
+            <div class="mb-3 mt-3">
+              <label for="topupInput" class="form-label">Top Up Balance</label>
+              <input name="newBalance" type="number" class="form-control" id="topupInput">
+            </div>
+            <button type="submit" class="btn btn-success mt-3 w-100 py-2">Top Up</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%-include('partials/footer') %>

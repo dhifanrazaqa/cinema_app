@@ -1,0 +1,24 @@
+<%- include('partials/header') %>
+<main class="container">
+  <div class="ui segment">
+    <div class="album py-5">
+      <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <% movies.forEach(function(movie) { %>
+          <div class="col">
+            <div class="card product">
+            <div class="imgbox"> <img src="<%= movie.poster_url %>"> </div>
+            <div class="specifies">
+                <h2><%= movie.title %><br> <span><%= movie.age_rating %>+</span></h2>
+                <label>Price</label> <div class="price">Rp<%= movie.ticket_price %></div>
+                <a href="/<%= movie.id %>/detail" class="btn btn-primary">Book Now</a>
+            </div>
+          </div>
+          </div>
+        <% }); %>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<%-include('partials/footer') %>

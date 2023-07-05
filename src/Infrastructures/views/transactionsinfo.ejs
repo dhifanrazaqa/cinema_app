@@ -1,0 +1,53 @@
+<%- include('partials/header') %>
+<div class="container py-5">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">no</th>
+        <th scope="col">movie</th>
+        <th scope="col">showtime</th>
+        <th scope="col">total price</th>
+        <th scope="col">refund</th>
+        <th scope="col">no seat</th>
+        <th scope="col">time</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% var i = 1 %>
+      <% transactions.forEach(function(transaction) { %>
+        <tr>
+          <th scope="row"><%= i %></th>
+          <td><%= transaction.title %></td>
+          <td><%= transaction.st_time %></td>
+          <td><%= transaction.total_price %></td>
+          <% if(transaction.refund === false) {%>
+            <form action="/transactions/refund" method="post">
+              <input type="hidden" name="id" value="<%= transaction.id %>">
+              <input type="hidden" name="totalPrice" value="<%= transaction.total_price %>">
+              <input type="hidden" name="idShow" value="<%= transaction.id_show %>">
+              <input type="hidden" name="noSeat1" value="<%= transaction.no_seat1 %>">
+              <input type="hidden" name="noSeat2" value="<%= transaction.no_seat2 %>">
+              <input type="hidden" name="noSeat3" value="<%= transaction.no_seat3 %>">
+              <input type="hidden" name="noSeat4" value="<%= transaction.no_seat4 %>">
+              <input type="hidden" name="noSeat5" value="<%= transaction.no_seat5 %>">
+              <input type="hidden" name="noSeat6" value="<%= transaction.no_seat6 %>">
+              <td><button class="btn btn-danger m-1" style="size: 10px;">refund</button></td>
+            </form>
+            <% } else { %>
+            <td><button class="btn btn-secondary m-1" style="size: 10px;"><s>refund</s></button></td>
+          <% } %>
+          <td><%= transaction.no_seat1 %> 
+            <%= transaction.no_seat2 %> 
+            <%= transaction.no_seat3 %> 
+            <%= transaction.no_seat4 %> 
+            <%= transaction.no_seat5 %> 
+            <%= transaction.no_seat6 %>
+          </td>
+          <td><%= transaction.time %></td>
+        </tr>
+        <% i++ %>
+      <% }); %>
+    </tbody>
+  </table>      
+</div>
+<%- include('partials/footer') %>

@@ -1,0 +1,48 @@
+<%- include('partials/header') %>
+<section class="h-100 h-custom">
+  <% var obj = req.body %>
+  <% var totPrice = movie.ticket_price * Object.keys(obj).length %>
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-lg-8 col-xl-6">
+        <div class="card rounded-3">
+          <div class="card-body p-4 p-md-5">
+            <h3 class="pb-4">Receipt</h3>
+            <% show.forEach(function(sh) { %>
+              <% if(sh.id === showtime) { %>
+                <h4><%= movie.title %> - <%= sh.st_time %></h4>
+              <% } %>
+            <% }); %>
+            <form id="paymentForm" action="proccess" method="post">
+              <input type="hidden" name="idUser" value="<%= req.session.userid  %>">
+              <input type="hidden" name="idMovie" value="<%= movie.id  %>">
+              <input type="hidden" name="idShow" value="<%= showtime  %>">
+              <div class="row justify-content-center">
+                <h3 class="col-auto">Seat:</h3> <h3 class="col-auto">Price:</h3>
+              </div>
+              <% for (const key in obj) { %>
+                <div class="row justify-content-center">
+                  <h3 class="col-auto"><%= obj[key]  %></h3> <h3 class="col-auto"><%= movie.ticket_price %></h3>
+                  <input type="hidden" name="<%= key %>" value="<%= obj[key]  %>">
+                </div>
+              <% }; %>
+              <div class="row justify-content-end py-3">
+                <h3 class="col-auto">Your Balance:</h3> <h3 class="col-auto"><%= balance %></h3>
+              </div>
+              <div class="row justify-content-end">
+                <h3 class="col-auto">Total:</h3> <h3 class="col-auto"><%= totPrice %></h3>
+              </div>
+              <input type="hidden" name="totalPrice" value="<%= totPrice %>">
+              <% if(totPrice < balance) { %>
+              <button type="submit" class="btn btn-success mt-3 w-100 py-2">Pay Now</button>
+              <% } else { %>
+              <h4>Not Enough Balance! <a href="/balances">Top Up!</a></h4>
+              <% } %>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<%- include('partials/footer') %>

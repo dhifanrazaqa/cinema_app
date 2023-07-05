@@ -1,0 +1,124 @@
+<%- include('partials/header') %>
+<% if (!req.session.userid) { %>
+  <head>
+    <meta http-equiv='refresh' content='0; URL=/'>
+  </head>
+  <section class="container">
+    <h4>Please Login! Redirecting..</h4>
+  </section>
+<% } else { %>
+<main class="container py-3">
+  <% if(user.age < movie.age_rating) {%>
+    <h4>You are <%= user.age %> years old. Go Back Little Kids <a href="." >back</a></h4>
+  <% } else { %>
+  <div class="row justify-content-center">
+    <% var i = 0 %>
+    <% seats.forEach(function(seat) { %>
+      <% if(i % 8 === 0) {%>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-1 m-1">
+            <% if(seat.available === true) { %>
+            <a class="btn btn-primary" style="width: 30px;"><%= seat.no_seat %></a>
+            <% } else { %>
+            <a class="btn btn-danger" style="width: 30px;"><%= seat.no_seat %></a>
+            <% } %>
+          </div>
+      <% } else { %>
+        <div class="col-1 m-1">
+          <% if(seat.available === true) { %>
+          <a class="btn btn-primary" style="width: 30px;"><%= seat.no_seat %></a>
+          <% } else { %>
+          <a class="btn btn-danger" style="width: 30px;"><%= seat.no_seat %></a>
+          <% } %>
+        </div>
+      <% } %>
+      <% i++ %>
+    <% }); %>
+  </div>
+  <div class="py-5">
+    <div class="row justify-content-center">
+      <div class="col-auto">
+        <label for="inputNumber">Insert Amount of Seat!</label>
+      </div>
+      <div class="col-auto">
+        <input type="number" id="inputNumber" class="form-control" placeholder="0">
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-auto">
+        <button onclick="generateButtons()" class="btn btn-primary">Insert</button>
+      </div>
+    </div>
+    <form action="<%= seats[0].id_show %>/payment" method="post">
+      <div id="textContainer" class="row justify-content-center py-3">
+  
+      </div>
+      <div id="buttonContainer" class="row justify-content-center py-3">
+
+      </div>
+    </form>
+    <datalist id="datalistOptions">
+      <% seats.forEach(function(seat) { %>
+        <% if(seat.available === true) { %>
+          <option value="<%= seat.no_seat %>">
+        <% } %>
+      <% }); %>
+    </datalist>
+  </div>
+  <script>
+    function generateButtons() {
+      var input = document.getElementById('inputNumber').value;
+      var container = document.getElementById('textContainer');
+      var buttonContainer = document.getElementById('buttonContainer');
+      event.preventDefault()
+      container.innerHTML = '';
+      buttonContainer.innerHTML = '';
+
+      if(input <= 6 && input >= 0) {
+        for (var i = 1; i <= input; i++) {
+          var inputList = document.createElement('input');
+          inputList.classList.add('form-control');
+          inputList.classList.add('col-auto');
+          inputList.classList.add('m-1');
+          inputList.setAttribute('list', 'datalistOptions');
+          inputList.setAttribute('placeholder', 'Seat-'+i);
+          inputList.setAttribute('maxLength', '2');
+          inputList.setAttribute('required', '');
+          inputList.setAttribute('name', 'noSeat'+i);
+          inputList.style.width = '100px';
+          container.appendChild(inputList);
+        }
+
+        var buttonSubmit = document.createElement('button');
+        buttonSubmit.innerText = 'Book';
+        buttonSubmit.classList.add('btn');
+        buttonSubmit.classList.add('btn-success');
+        buttonSubmit.style.width = '100px';
+        buttonSubmit.setAttribute('type', 'submit');
+        buttonContainer.appendChild(buttonSubmit);
+      } else {
+        alert('Maximum 6 seats!');
+      }
+    }
+    function appendUrl(event) {
+      event.preventDefault();
+
+      var form = event.target;
+      var currentAction = form.getAttribute('action');
+      console.log('here');
+      var additionalUrl = 'https://www.example.com';
+      
+      var newAction = currentAction + additionalUrl;
+
+      // Mengubah atribut action pada elemen form
+      form.setAttribute('action', newAction);
+
+      // Mengirim formulir secara programmatic
+      form.submit();
+    }
+  </script>
+  <% } %>
+</main>
+<% } %>
+<%-include('partials/footer') %>
