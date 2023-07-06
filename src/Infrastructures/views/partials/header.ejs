@@ -24,7 +24,7 @@
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="/">Home</a>
             </li>
-            <% if (!req.session.userid) { %>
+            <% if (!req.session) { %>
             <li class="nav-item">
               <a class="nav-link" href="/users">Register</a>
             </li>
