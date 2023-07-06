@@ -25,10 +25,16 @@ class BalancesHandler {
 
   async updateBalanceHandler(req, res, next) {
     try {
-      const { newBalance } = req.body;
+      let { newBalance } = req.body;
+      const { type } = req.body;
       const id = req.session.userid;
+      if (type === 'withdraw') {
+        newBalance = `-${newBalance}`;
+      }
+
       const topUpBalanceUseCase = this._container.getInstance(TopUpBalanceUseCase.name);
       await topUpBalanceUseCase.execute({ id, newBalance });
+
       return res.redirect('/balances');
     } catch (error) {
       return next(error);

@@ -11,8 +11,17 @@
             <div class="mb-3 mt-3">
               <label for="topupInput" class="form-label">Top Up Balance</label>
               <input name="newBalance" type="number" class="form-control" id="topupInput">
+              <input name="type" type="hidden" value="topup">
             </div>
             <button type="submit" class="btn btn-success mt-3 w-100 py-2">Top Up</button>
+          </form>
+          <form id="withdrawForm" action="/balances" method="post">
+            <div class="mb-3 mt-3">
+              <label for="topupInput" class="form-label">Withdraw Balance</label>
+              <input name="newBalance" type="number" class="form-control" id="topupInput">
+              <input name="type" type="hidden" value="withdraw">
+            </div>
+            <button type="submit" class="btn btn-success mt-3 w-100 py-2">Withdraw</button>
           </form>
         </div>
       </div>
