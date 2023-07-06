@@ -35,14 +35,6 @@ const createServer = () => {
     }),
   }));
 
-  // const verifyLogin = (req, res, next) => {
-  //   console.log(req.sessions);
-  //   if (req.sessions === undefined) {
-  //     return res.render('errornotauthorized', { req });
-  //   }
-  //   return next();
-  // };
-
   app.use('/', users);
   app.use('/', authentications);
   app.use('/', movies);

@@ -12,6 +12,8 @@ class MoviesHandler {
 
   async getAllMovieHandler(req, res, next) {
     try {
+      if (!req.session.userid) req.session.userid = '';
+
       const getAllMovieUseCase = this._container.getInstance(GetAllMovieUseCase.name);
       const movies = await getAllMovieUseCase.execute();
       return res.render('index', { req, movies });
